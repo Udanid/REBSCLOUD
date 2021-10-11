@@ -1,5 +1,6 @@
 <?
   $futureDate=$loanstart_date=$details->start_date;
+  echo 'testing code';
  $arrayintlist=NULL;
  $current_date=date('Y-m-d');
  $end_date=date('Y-m-d',strtotime('+'.intval($details->period).' months',strtotime($futureDate)));
