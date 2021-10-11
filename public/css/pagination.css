@@ -1,0 +1,120 @@
+/******************************** PAGINATION **********************************/
+#pagination-container {
+	margin-top:20px;
+	margin-bottom:50px;
+}
+
+ul#pagination-flickr {
+	border:0;
+	margin:0;
+	padding:0;
+	float:none;
+}
+
+#pagination-flickr li {
+	border:0;
+	margin:0;
+	padding:0;
+	font-size:11px;
+	list-style:none;
+}
+
+#pagination-flickr a {
+	border:solid 1px #DDDDDD;
+	margin-right:2px;
+}
+
+#pagination-flickr .previous-off,
+#pagination-flickr .next-off {
+	color:#666666;
+	display:block;
+	float:left;
+	font-weight:bold;
+	padding:3px 4px;
+}
+
+#pagination-flickr .next a,
+#pagination-flickr .previous a {
+	font-weight:bold;
+	border:solid 1px #FFFFFF;
+}
+
+#pagination-flickr .active{
+	color:#000000;
+	font-weight:bold;
+	display:block;
+	float:left;
+	padding:4px 6px;
+}
+
+#pagination-flickr a:link,
+#pagination-flickr a:visited {
+	color:#0063e3;
+	display:block;
+	float:left;
+	padding:3px 6px;
+	text-decoration:none;
+}
+
+#pagination-flickr a:hover{
+	border:solid 1px #666666;
+}
+/******************************** My additions **********************************/
+.icon_red{
+	color:#d91a11;
+
+}
+.icon_blue{
+	color:#048bd9;
+}
+.icon_green{
+	color:#2aba03;
+}
+.confirmbox_green {
+ 
+  
+  background-color:#196f02;
+ 
+}
+.smalltext_itrates{
+	width:50px;
+	padding:0;
+}
+.loadinggif{
+	 margin: auto;
+	 display:block;
+    width: 20%;
+   
+    padding: 10px;
+		
+}
+a:hover {
+
+  position: relative;
+}
+
+a[title]:hover:after {
+  content: attr(title);
+  padding: 4px 8px;
+  color: #333;
+  display:block;
+  position:absolute;
+right: 10px;;
+  top: 100%;
+  
+  z-index: 2000;
+  white-space: nowrap;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 5px;
+  border-radius: 2px;
+  -moz-box-shadow: 0px 0px 4px #222;
+  -webkit-box-shadow: 0px 0px 4px #222;
+  box-shadow: 0px 0px 4px #222;
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+}
+

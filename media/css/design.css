@@ -1,0 +1,67 @@
+.title-details{
+  padding: 10px;
+}
+.title-details h2{
+  padding: 10px;
+  background-color: #a399f6;
+}
+.title-details tr td{
+  font-size: 1.2em;
+}
+.title-details tr th{
+  font-size: 1.2em;
+  float:left;
+}
+ .allimg a img{
+  /*width:150px;*/
+  height:100px;
+  padding: 2px;
+  box-shadow: 2px 2px 4px #000;
+}
+#floordata h4{
+  padding: 5px;
+  background-color: #99caf6;
+}
+#floordata h5{
+  padding: 5px;
+  /*color:#a399f6;*/
+}
+#floordata{
+  padding: 15px;
+}
+.floorroomsdiv{
+  margin-top: 5px;
+}
+.floorimgrow{
+  padding-bottom: 10px;
+}
+ .floorimgrow a img{
+  /*width:250px;*/
+  height:100px;
+  padding: 2px;
+  box-shadow: 2px 2px 4px #000;
+}
+.eachfloor{
+  border-width: thick;
+  padding: 15px;
+}
+.image-main img{
+  padding: 2px;
+  height:250px;
+  box-shadow: 2px 2px 4px #000;
+}
+.image-all img{
+  padding: 2px;
+  height:150px;
+  box-shadow: 2px 2px 4px #000;
+}
+.floortable{
+  padding: 5px;
+  margin: 15px;
+  max-width: 60%;
+}
+.roomicon{
+  color: #339cff !important;
+  padding: 3px;
+  font-size: 1.6em;
+}

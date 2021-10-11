@@ -1,0 +1,163 @@
+CA Server - 
+Hostname: eep.sltidc.lk
+Local IP: 172.20.18.228
+
+cd /etc/pki/CA
+[root@pike CA]#  touch index.txt
+
+[root@pike CA]# echo '01' > serial
+[root@pike CA]# echo '01' > crlnumber
+[root@pike CA]# ls
+certs  crl  crlnumber  index.txt  newcerts  private  serial
+[root@pike CA]# cat serial
+01
+[root@pike CA]#
+
+[root@eep CA]# openssl req -new -x509 -extensions v3_ca -keyout private/ca-cert.key -out certs/ca-cert.crt -days 5475
+Generating a 2048 bit RSA private key
+.......................................................................................+++
+...+++
+writing new private key to 'private/ca-cert.key'
+Enter PEM pass phrase: D3f_Le2p@r6 (Def Leppard)
+Verifying - Enter PEM pass phrase: D3f_Le2p@r6
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [XX]:LK
+State or Province Name (full name) []:Western Province
+Locality Name (eg, city) [Default City]:Colombo
+Organization Name (eg, company) [Default Company Ltd]:Sri Lanka Telecom PLC
+Organizational Unit Name (eg, section) []:SLT Data Center
+Common Name (eg, your name or your server's hostname) []:CA
+Email Address []:postmaster@sltidc.lk
+
+[root@pike CA]# ls
+certs  crl  crlnumber  index.txt  newcerts  private  serial
+[root@pike CA]# cd private/
+[root@pike private]# ls
+ca-cert.key
+
+Generating Sertificate CSR in the Mail Server
+
+root@mail:/usr/local/etc/pki # openssl genrsa -des3 -out rhel6.sltidc.lk.key 2048
+Generating RSA private key, 2048 bit long modulus
+.....................................................................+++
+........+++
+e is 65537 (0x10001)
+Enter pass phrase for rhel6.sltidc.lk.key:
+Verifying - Enter pass phrase for rhel6.sltidc.lk.key:
+
+root@mail:/usr/local/etc/pki # openssl rsa -in rhel6.sltidc.lk.key -out rhel6.sltidc.lk.pem
+Enter pass phrase for rhel6.sltidc.lk.key:
+writing RSA key
+
+root@mail:/usr/local/etc/pki # openssl req -new -key rhel6.sltidc.lk.key -out rhel6.sltidc.lk.csr
+Enter pass phrase for rhel6.sltidc.lk.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:LK
+State or Province Name (full name) [Some-State]:Western Province
+Locality Name (eg, city) []:Colombo
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Sri Lanka Telecom PLC
+Organizational Unit Name (eg, section) []:SLT Data Center
+Common Name (e.g. server FQDN or YOUR name) []:mail.rhel6.sltidc.lk
+Email Address []:postmaster@rhel6.sltidc.lk
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:SLTiDC
+An optional company name []:SLTiDC
+
+
+
+
+Signing a Certficate
+
+[root@eep ~]# cd /etc/pki/CA
+[root@eep CA]# pwd
+/etc/pki/CA
+
+root@mail:~ # cd /usr/local/etc/pki/
+[root@eep crl]# ls
+rhel6.sltidc.lk.csr
+
+[root@eep crl]# cd /etc/pki/CA
+[root@eep CA]# pwd
+/etc/pki/CA
+
+[root@eep CA]# openssl ca -in crl/rhel6.sltidc.lk.csr -out newcerts/rhel6.sltidc.lk.crt -keyfile  private/ca-cert.key -cert certs/ca-cert.crt -days 3650
+Using configuration from /etc/pki/tls/openssl.cnf
+Enter pass phrase for private/ca-cert.key: D3f_Le2p@r6
+Check that the request matches the signature
+Signature ok
+Certificate Details:
+        Serial Number: 1 (0x1)
+        Validity
+            Not Before: Mar  6 06:32:07 2015 GMT
+            Not After : Mar  3 06:32:07 2025 GMT
+        Subject:
+            countryName               = LK
+            stateOrProvinceName       = Western Province
+            organizationName          = Sri Lanka Telecom PLC
+            organizationalUnitName    = SLT Data Center
+            commonName                = mail.rhel6.sltidc.lk
+            emailAddress              = postmaster@rhel6.sltidc.lk
+        X509v3 extensions:
+            X509v3 Basic Constraints:
+                CA:FALSE
+            Netscape Comment:
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier:
+                96:1D:ED:0B:52:D4:99:8B:14:A1:1A:DB:A4:47:D6:B3:82:EE:15:3E
+            X509v3 Authority Key Identifier:
+                keyid:90:EC:4A:A1:49:07:12:8B:9F:4B:BA:6A:70:B8:7A:C8:C7:BF:21:19
+
+Certificate is to be certified until Mar  3 06:32:07 2025 GMT (3650 days)
+Sign the certificate? [y/n]:y
+
+
+1 out of 1 certificate requests certified, commit? [y/n]y
+Write out database with 1 new entries
+Data Base Updated
+[root@eep CA]#
+
+[root@eep CA]# cd newcerts/
+[root@eep newcerts]# ls
+01.pem  rhel6.sltidc.lk.crt
+
+
+/usr/local/etc/pki/rhel6.sltidc.lk.crt
+
+
+/usr/local/etc/pki/ca-cert.crt
+
+/usr/local/etc/pki/rhel6.sltidc.lk.pem
+
+/usr/local/share/courier-imap/pop3d.pem
+
+root@mail:/usr/local/etc/pki # cat ca-cert.crt rhel6.sltidc.lk.crt rhel6.sltidc.lk.pem > server.pem
+
+TLS_CERTFILE=/usr/local/etc/pki/courier.pem
+TLS_TRUSTCERTS=/usr/local/etc/pki/ca-cert.crt
+
+
+openssl genrsa -des3 -out mail.key 2048
+openssl req -new -key mail.key -out mail.csr
+openssl x509 -req -days 3650 -in mail.csr -signkey mail.key -out mail.crt
+openssl rsa -in mail.key -out mail.pem
+
+smtpd_tls_key_file = mail.pem
+smtpd_tls_cert_file = mail.crt
+smtpd_tls_CAfile = cacert.pem
+
+

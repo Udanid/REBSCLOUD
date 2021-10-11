@@ -1,0 +1,449 @@
+/******************************** PAGINATION **********************************/
+#pagination-container {
+	margin-top:20px;
+	margin-bottom:50px;
+}
+
+ul#pagination-flickr {
+	border:0;
+	margin:0;
+	padding:0;
+	float:none;
+}
+
+#pagination-flickr li {
+	border:0;
+	margin:0;
+	padding:0;
+	font-size:11px;
+	list-style:none;
+}
+
+#pagination-flickr a {
+	border:solid 1px #DDDDDD;
+	margin-right:2px;
+}
+
+#pagination-flickr .previous-off,
+#pagination-flickr .next-off {
+	color:#666666;
+	display:block;
+	float:left;
+	font-weight:bold;
+	padding:3px 4px;
+}
+
+#pagination-flickr .next a,
+#pagination-flickr .previous a {
+	font-weight:bold;
+	border:solid 1px #FFFFFF;
+}
+
+#pagination-flickr .active{
+	color:#000000;
+	font-weight:bold;
+	display:block;
+	float:left;
+	padding:4px 6px;
+}
+
+#pagination-flickr a:link,
+#pagination-flickr a:visited {
+	color:#0063e3;
+	display:block;
+	float:left;
+	padding:3px 6px;
+	text-decoration:none;
+}
+
+#pagination-flickr a:hover{
+	border:solid 1px #666666;
+}
+/******************************** My additions **********************************/
+.icon_red{
+	color:#d91a11;
+
+}
+.icon_blue{
+	color:#048bd9;
+}
+.icon_green{
+	color:#2aba03;
+}
+.confirmbox_green {
+
+
+  background-color:#196f02;
+
+}
+.smalltext_itrates{
+	width:50px;
+	padding:0;
+}
+.loadinggif{
+	 margin: auto;
+	 display:block;
+    width: 20%;
+
+    padding: 10px;
+
+}
+a:hover {
+
+  position: relative;
+}
+
+a[title]:hover:after {
+  content: attr(title);
+  padding: 4px 8px;
+  color: #333;
+  display:block;
+  position:absolute;
+right: 10px;;
+  top: 100%;
+
+  z-index: 2000;
+  white-space: nowrap;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 5px;
+  border-radius: 2px;
+  -moz-box-shadow: 0px 0px 4px #222;
+  -webkit-box-shadow: 0px 0px 4px #222;
+  box-shadow: 0px 0px 4px #222;
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+}
+
+/******************************************************************************/
+/******************************* SIMPLE TABLE *********************************/
+/******************************************************************************/
+
+.simple-table {
+	font-size:14px;
+	border-collapse:collapse;
+	text-align:left;
+}
+
+.simple-table th {
+	font-weight:normal;
+	color:#000000;
+	padding:5px 8px;
+	border-bottom:1px solid #999999;
+	border-top:1px solid #999999;
+	background-color:#EEEEEE;
+}
+
+.simple-table td {
+	border-bottom:1px solid #BBBBBB;
+	color:#000000;
+	padding:8px 8px 8px 8px;
+}
+
+.simple-table tr.tr-active {
+	background-color:#FFFFE6;
+}
+
+.simple-table tr.tr-group td {
+	background-color:#FFFFE6;
+}
+
+.simple-table tr.tr-total {
+	background-color:#FFFFE6;
+}
+
+.simple-table a.red-link {
+	color:#FF0000;
+}
+
+tr.total-area {
+	background-color: #F8F8F8;
+}
+
+/******************************************************************************/
+/****************************** ENTRY TABLE ***********************************/
+/******************************************************************************/
+
+.entry-table {
+	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size:14px;
+	border-collapse:collapse;
+	text-align:left;
+}
+
+.entry-table th {
+	font-weight:normal;
+	color:#000000;
+	padding:5px 8px;
+	background-color:#EEEEEE;
+}
+
+.entry-table td {
+	color:#000000;
+	padding:8px 8px 8px 8px;
+}
+
+.entry-table tr.new-row {
+	background-color:#FFFFE0;
+}
+
+/******************************************************************************/
+/****************************** CUSTOM TABLES *********************************/
+/******************************************************************************/
+
+.account-table td {
+	padding-right: 30px;
+}
+
+.account-table .td-actions {
+	padding-right: 8px;
+}
+
+.entry-view-table td {
+	padding-right: 30px;
+}
+
+.entry-view-table tr.entry-total {
+	background-color:#FFFFE0;
+}
+
+.entry-view-table tr.entry-difference {
+	background-color:#FFE9E8;
+}
+
+.trial-balance-table td {
+	padding-right: 20px;
+}
+
+/* balance sheet */
+.balance-sheet-table {
+	border:1px solid #BBBBBB;
+}
+
+.balance-sheet-table td {
+	border:1px solid #EEEEEE;
+}
+
+.balance-sheet-table tr.tr-group td {
+	background-color:#FFFFE6;
+}
+
+.balance-sheet-total-table {
+	font-size:14px;
+	border-collapse:collapse;
+	text-align:left;
+}
+
+.balance-sheet-total-table td {
+	border-bottom:1px solid #FFFFFF;
+	color:#000000;
+	padding:8px 8px 8px 8px;
+}
+
+/* profit and loss */
+.profit-loss-table {
+	border:1px solid #BBBBBB;
+}
+
+.profit-loss-table td {
+	border:1px solid #EEEEEE;
+}
+
+.profit-loss-table tr.tr-group td {
+	background-color:#FFFFE6;
+}
+
+.profit-loss-total-table {
+	font-size:14px;
+	border-collapse:collapse;
+	text-align:left;
+}
+
+.profit-loss-total-table td {
+	border-bottom:1px solid #FFFFFF;
+	color:#000000;
+	padding:8px 8px 8px 8px;
+}
+
+.dashboard-cashbank-table {
+	border-collapse: collapse;
+	text-align: left;
+}
+
+.dashboard-cashbank-table td {
+	padding: 8px 8px 8px 20px;
+}
+
+.dashboard-cashbank-table td a {
+	color: #000000;
+}
+
+.dashboard-summary-table {
+	border-collapse: collapse;
+	text-align: left;
+}
+
+.dashboard-summary-table td {
+	padding: 8px 8px 8px 20px;
+}
+
+.dashboard-summary-table td a {
+	color: #000000;
+}
+
+.dashboard-log-footer {
+	padding:10px;
+	border-top:1px solid #BBBBBB;
+}
+
+.ac_ledgerst-table td {
+
+}
+
+.ac_ledgerst-table .tr-balance {
+	font-weight:bold;
+}
+
+.ledger-summary {
+	font-size:14px;
+	border-collapse: collapse;
+	text-align: left;
+	border: 1px solid #BBBBBB;
+	background-color:#FFFFCC;
+}
+
+.ledger-summary tr {
+	border: 1px solid #BBBBBB;
+}
+
+.ledger-summary td {
+	padding: 8px 8px 8px 8px;
+}
+
+.reconciliation-table .tr-reconciled {
+	background-color:#FFFFE6;
+}
+
+.reconciliation-summary {
+	font-size:14px;
+	border-collapse: collapse;
+	text-align: left;
+	border: 1px solid #BBBBBB;
+	background-color:#FFFFCC;
+}
+
+.reconciliation-summary tr {
+	border: 1px solid #BBBBBB;
+}
+
+.reconciliation-summary td {
+	padding: 8px 8px 8px 8px;
+}
+
+.manage-account-table td {
+	padding-right: 20px;
+}
+ .topmenubar{
+	  margin-top:-32px; height:30px; width:100%; border-top:1px solid #2eb420;
+  }
+  .topmenuitem {
+    font-size: .8em;
+  
+    padding: 0.1em 0;
+    text-align: center;
+    cursor: pointer;
+    float: left;
+    color: #fff;
+    -moz-transition: all 0.2s ease-out 0s;
+    -webkit-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+	border: none;
+	border-left:1px solid #ccc;
+	font-weight:bold;
+    background-color: #2eb420;
+	background-position: -60px -60px, 0 0;
+	-webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+          transition-duration: 0.5s;
+	outline:none;
+}
+.topmenuitem:hover {
+    color: #fff;
+	background: #2eb420;
+	background-image: linear-gradient(to right, #2bb61d 0%, #0d8f00 51%, #2bb61d 100%) !important;
+	background-position: -90px -90px, 0 0;
+	-webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+          transition-duration: 0.5s;
+}
+.topmenuitem_active
+{
+	  color: #fff;
+	background-image: linear-gradient(to right, #0d8f00 20%, #ff5148 51%, #0d8f00 100%) !important;
+}
+/*
+background-image: linear-gradient(to right, #0d8f00 0%, #2bb61d 51%, #0d8f00 100%) !important;
+ */
+.yellow{background-color:#FF6;}
+.purple{ background-color:#96F;color:#FFF;}
+.green{ background-color:#3F6;}
+.brown{ background-color:#966; color:#FFF;}
+.red{ background-color:#F66; color:#FFF;}
+
+.adv_searchpanel
+{
+	overflow:auto;
+	top:12%;
+	left:23.0%;
+	width:80%;
+	max-height:500px;
+	padding-left:0px;
+	background-color:#fff;
+	z-index:100;
+	position:fixed;
+}
+
+@media(max-width:1920px){
+	.adv_searchpanel
+{
+		top:8%;
+	left:20.0%;
+	width:80%;
+
+
+}
+}
+@media(max-width:1440px){
+	.adv_searchpanel
+{
+		top:78px;
+	left:23.0%;
+	width:80%;
+
+
+}
+}
+@media(max-width:1024px){
+	.adv_searchpanel
+{
+		top:78px;
+	left:27.5%;
+	width:80%;
+
+
+}
+}
+@media(max-width:768px){
+	.adv_searchpanel
+{
+	display:none;
+		top:300px;
+	left:23.0%;
+	width:80%;
+
+
+}
+}

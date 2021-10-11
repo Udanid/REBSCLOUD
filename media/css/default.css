@@ -1,0 +1,66 @@
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans);
+
+
+
+/**  custom bootstrap - start */
+.btn {
+  
+  border-color: #ddd;
+}
+
+.btn:hover {
+  border: solid 1px #bbb;
+  background-color: #fff;
+}
+
+.btn:active {
+  background-color: #f9f9f9;
+  border: solid 1px #bbb;
+  outline: none;
+}
+
+.btn:disabled {
+  background-color: #f9f9f9;
+  border: solid 1px #ddd;
+  color: #bbb;
+}
+
+.btn:focus:active, .btn:focus, .btn:active {
+  outline: none;
+}
+
+.open > .dropdown-toggle.btn-default {
+  background-color: #fff;
+}
+
+.dropdown-menu {
+  
+  border: 1px solid #bbb;
+}
+
+.dropdown-menu > li > a {
+ 
+  cursor: pointer;
+}
+
+.dropdown-menu > li > a:hover {
+  background-color: rgba(81, 92, 230, 0.05);
+  color: #333;
+}
+
+.bi15 {
+  width: 15px;
+  height: 15px;
+}
+/** custom fontawesome - end */
+
+.calendar-icon {
+  width: 14px;
+  height: 14px;
+}
+
+#top {
+  border-bottom: 1px solid #bbb;
+  padding: 16px;
+  font-size: 10px;
+}
