@@ -567,7 +567,7 @@ class accountinterface_model extends CI_Model {
 						$crlist[0]['amount']=$crtot=$data->amount;
 						$drlist[0]['ledgerid']=$data->ledger_account;
 						$drlist[0]['amount']=$drtot=$data->amount;
-						$narration = $reseavation_data->res_code.'- Customer Excess Payment Transfer'  ;
+						$narration = $reseavation_data->res_code.'- Customer Excess Payment Transfer On receipting'  ;
 						$int_entry=jurnal_entry($crlist,$drlist,$crtot,$drtot,$date,$narration,$reseavation_data->prj_id,$reseavation_data->lot_id,$reseavation_data->res_code);
 					
 						$this->insert_pay_enties($id,$int_entry,'EP Interest');
