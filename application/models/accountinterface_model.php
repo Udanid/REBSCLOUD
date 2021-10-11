@@ -549,11 +549,12 @@ class accountinterface_model extends CI_Model {
 			  
 		
 		}
-		$this->transfer_excess_amount($id, $reservation_code,$date);
+		$this->transfer_excess_amount($id, $reservation_code,$date);// transfer to excess amount to libility account
 		update_pending_cheque_charge($reseavation_data->cus_code,$id);
 	}
 	function transfer_excess_amount($id,$reservation_code,$date)
 	{
+		
 		$this->db->select('*');
 		$this->db->where('pay_id',$id);
 		$query = $this->db->get('re_arreaspayment'); 
