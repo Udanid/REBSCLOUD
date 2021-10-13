@@ -5,6 +5,13 @@
 <?
 $this->load->view("includes/header_".$this->session->userdata('usermodule'));
 $this->load->view("includes/topbar_accounts");
+
+if($this->session->flashdata('msg') == 'Year end process completed. Please re-login to affect changes.' || $this->session->flashdata('msg') == 'New year initialised. Please re-login to proceed.'){
+?>
+<meta http-equiv="refresh" content="3; url=<?=base_url()?>login/logout" />
+<?	
+}
+?>
 ?>
 <script src="<?=base_url()?>media/js/jquery.confirm.js"></script>
 
@@ -50,6 +57,14 @@ $this->load->view("includes/topbar_accounts");
 function changeAccountsYear(val){
 	window.location="<?=base_url()?>accounts/yearend/change_year/"+val;
 }
+
+function openNewyear(val){
+	if(confirm("Are you sure you want open new year?")){
+		window.location="<?=base_url()?>accounts/yearend/open_new_year/"+val;
+	}else{
+		return false;
+	}
+}
 </script>
 <button type="button" style="display:none; visibility:hidden;" class="btn btn-delete" id="complexConfirm_confirm" name="complexConfirm_confirm"  value="DELETE"></button>
 <div id="page-wrapper">
@@ -67,31 +82,32 @@ function changeAccountsYear(val){
         </div>
 		<? }?>
 		  <?php
-          echo form_open('accounts/yearend', array('id' => 'yearend_form'));
+          echo form_open('accounts/yearend/process', array('id' => 'yearend_form'));
           ?>
            <div class="form-group">
+           	<?
+			if($this->session->userdata('usertype')=='admin'){?>
+              <div class="col-sm-3">
+              	  <button type="button" onClick="openNewyear('<?=date('Y-m-d',strtotime('+1 years',strtotime($current_year->end_date)))?>');" id="new_year" class="btn btn-success ">Run New Year Process</button> 
+              </div>
+              <? }
+			  ?>
            	  <div class="col-sm-2 ">
-                 <input type="text" name="year" id="year" placeholder="Year" readonly value="<?=date('Y',strtotime($this->session->userdata('fy_end')))?>" class="form-control" >
+                 <input type="text" name="year" id="year" placeholder="Year" readonly value="<?=date('Y',strtotime($this->session->userdata('fy_start')))?>" class="form-control" >
               </div>
               <div class="col-sm-2 ">
-                 <input type="text" name="start_date" id="start_date" readonly placeholder="Start Date"  value="<?=date('Y-m-d',strtotime($this->session->userdata('fy_start')))?>"  autocomplete="off" class="form-control" >
+                 <input type="text" name="start_date" id="start_date" readonly placeholder="Start Date"  value="<?=$current_year->start_date?>"  autocomplete="off" class="form-control" >
               </div>
               
               <div class="col-sm-2 ">
-                 <input type="text" name="end_date" id="end_date" readonly placeholder="End Date"  value="<?=date('Y-m-d',strtotime($this->session->userdata('fy_end')))?>"  autocomplete="off" class="form-control" >
+                 <input type="text" name="end_date" id="end_date" readonly placeholder="End Date"  value="<?=$current_year->end_date?>"  autocomplete="off" class="form-control" >
               </div>
-              <? if($this->session->userdata('usertype')=='admin' || $this->session->userdata('usertype')=='Finance'){?>
+              <? if($this->session->userdata('usertype')=='admin'){?>
               <div class="col-sm-1 ">
-                  <button type="submit" id="yearend_submit" class="btn btn-primary ">Continue</button> </div>
+                  <button type="submit" id="yearend_submit" class="btn btn-primary ">Run Year End Process</button> </div>
               </div>
-              <? }
-               if($this->session->userdata('usertype')=='admin'){?>
-              <div class="col-sm-2 ">
-              	  <button type="button" onClick="lockAccounts(<?=date('Y',strtotime($this->session->userdata('fy_end').'-1 year'))?>);" <? if ($year_lock=='1' || $year_lock == ''){?> disabled <? }?> id="yearend_submit" class="btn btn-danger ">Lock Database</button> 
-              </div>
-              <? }
-               if($this->session->userdata('usertype')=='admin' || $this->session->userdata('usertype')=='Finance'){?>
-              <div class="col-sm-2 ">
+              <? }?>
+              <!--<div class="col-sm-2 ">
                  <select id="year_switch" name="year_switch" onchange="changeAccountsYear(this.value);">
                       <option></option>
                       <? if($years){
@@ -106,9 +122,9 @@ function changeAccountsYear(val){
                       ?>
                       <option value="current">Current Year</option>
                   </select>
+              </div>-->
               </div>
-              </div>
-              <? }?>
+              <? ?>
               <div class="clearfix"> </div>
               <div class="clearfix"> </div><br>	
 		   </div> 						

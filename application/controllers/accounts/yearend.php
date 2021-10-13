@@ -8,7 +8,7 @@ class Yearend extends CI_Controller {
 		$this->load->model('Ledger_model');
   	}
 
-  	public function index(){
+  	/*public function index(){
 		if ( ! check_access('yearend_process'))
 		{
 			$this->session->set_flashdata('error', 'Permission Denied');
@@ -23,7 +23,7 @@ class Yearend extends CI_Controller {
 			
 			
 			//check whether the year has a lock
-			if($this->yearend_model->check_lock(date('Y',strtotime($this->session->userdata('fy_end').'-1 year')))){
+			if($this->yearend_model->check_lock($year)){
 				$this->session->set_flashdata('error', 'Account year has been locked.');
 				redirect('accounts/yearend');
 				return;
@@ -40,11 +40,7 @@ class Yearend extends CI_Controller {
 			}
 			
 			//now we check whether the process runs on correct date
-			/*if($this->session->userdata('fy_start') != $start_date && $this->session->userdata('fy_end') != $end_date){
-				$this->session->set_flashdata('error', 'Incorrect date to run this process. Please re-try on '.$this->session->userdata('fy_end'));
-				redirect('accounts/yearend');
-				return;
-			}*/
+
 			
 			//check the process run date
 			if($this->session->userdata('fy_end') > date('Y-m-d')){
@@ -70,6 +66,13 @@ class Yearend extends CI_Controller {
 			$this->load->view('accounts/yearend',$data);
 		}
 		
+	}*/
+	
+	public function index(){
+		$data['years'] = $this->yearend_model->get_years();
+		$data['current_year'] = $this->yearend_model->get_current_year();
+		$data['year_lock'] = $this->yearend_model->check_lock(date('Y',strtotime($this->session->userdata('fy_end').'-1 year')));
+		$this->load->view('accounts/yearend',$data);
 	}
 	
 	function change_year(){
@@ -91,9 +94,26 @@ class Yearend extends CI_Controller {
 		}
 	}
 	
-	function test(){
-		echo date('Y',strtotime($this->session->userdata('fy_end').'-1 year'));
-		//echo $this->Ledger_model->get_ledger_balance_todate('HEDPI52000700','2019-03-31');
-		//echo check_user_lock($this->session->userdata('usertype'));
+	function open_new_year($date){
+		if($this->yearend_model->open_new_year($date)){
+			$this->session->set_flashdata('msg','New year initialised. Please re-login to proceed.');
+			redirect('accounts/yearend');
+		}else{
+			$this->session->set_flashdata('error', 'Failed to open new year.');
+			redirect('accounts/yearend');
+			return;
+		}
 	}
+	
+	function process(){
+		if($this->yearend_model->year_end_process_new()){
+			$this->session->set_flashdata('msg', 'Year end process completed. Please re-login to affect changes.');
+			redirect('accounts/yearend');
+		}else{
+			$this->session->set_flashdata('error', 'Something went wrong. Please contact your service provider.');
+			redirect('accounts/yearend');
+		}
+	}
+	
+	
 }
