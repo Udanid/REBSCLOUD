@@ -751,7 +751,9 @@ function get_next_ledgerid($data_group_id)
 				$newcode=$code.$newid;
 			}
 			return $newcode;
+			echo 'test';
 			
         }
 }
+
 }
