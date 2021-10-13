@@ -29,7 +29,7 @@ if ( ! function_exists('check_user_lock'))
 {
 	function check_user_lock($user_type)
 	{
-		$types_array = array('SENIOR ACCOUNTANT','Audit','admin');
+		$types_array = array('admin');
 		
 		if (in_array($user_type, $types_array)){
 			return true;
