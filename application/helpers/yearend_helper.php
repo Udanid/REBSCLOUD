@@ -60,3 +60,14 @@ if ( ! function_exists('get_financial_years'))
 		return $years;
 	}
 }
+
+if ( ! function_exists('year_end_completed'))
+{
+	function year_end_completed()
+	{
+		$CI =& get_instance();
+		$CI->load->model('yearend_model');
+		$result = $CI->yearend_model->year_end_completed();
+		return $result;
+	}
+}

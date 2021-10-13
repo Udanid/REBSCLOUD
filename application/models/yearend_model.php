@@ -471,4 +471,14 @@ class yearend_model extends CI_Model {
 		}	
 	}
 	
+	
+	function year_end_completed(){
+		$this->db->from('ac_finance_year')->where('locked', '1');
+		  $ledger_q = $this->db->get();
+			if ($ledger_q->num_rows() > 0){
+				return true;
+			}
+			return false;	
+	}
+	
 }
