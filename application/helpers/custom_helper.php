@@ -666,3 +666,15 @@ if ( ! function_exists('first_renatl_due_date'))
 		return $result;
 	}
 }
+
+if ( ! function_exists('year_end_completed'))
+{
+	function year_end_completed()
+	{
+		$CI =& get_instance();
+		$CI->load->model('Ledger_model');
+		$result = $CI->Ledger_model->year_end_completed();
+		return $result;
+	}
+}
+

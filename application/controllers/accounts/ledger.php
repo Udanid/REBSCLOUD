@@ -268,29 +268,28 @@ class Ledger extends CI_Controller {
 			'value' => $ledger_data->name,
 		);
 		$data['ledger_group_id'] = $this->Group_model->get_ledger_ac_groups();
-		if(ledger_deletable($id))
+		if(ledger_deletable($id) && !year_end_completed())
 		{
-				$data['op_balance'] = array(
+			$data['op_balance'] = array(
 				'name' => 'op_balance',
 				'id' => 'op_balance',
 				'maxlength' => '15',
 				'size' => '15',
-				
-					'class' => 'form-control',
+				'class' => 'form-control',
 				'value' => $ledger_data->op_balance,
 			);
 		}
 		else 
 		{
 			$data['op_balance'] = array(
-			'name' => 'op_balance',
-			'id' => 'op_balance',
-			'maxlength' => '15',
-			'size' => '15',
-			//'readonly'=>'readonly',
+				'name' => 'op_balance',
+				'id' => 'op_balance',
+				'maxlength' => '15',
+				'size' => '15',
+				'readonly'=>'readonly',
 				'class' => 'form-control',
-			'value' => $ledger_data->op_balance,
-		);
+				'value' => $ledger_data->op_balance,
+			);
 		}
 		
 		$data['ledger_group_active'] = $ledger_data->group_id;

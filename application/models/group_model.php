@@ -25,7 +25,7 @@ class Group_model extends CI_Model {
     function get_ledger_ac_groups()
     {
         $options = array();
-        $this->db->from('ac_groups')->where('id >', 4)->order_by('name', 'asc');
+        $this->db->from('ac_groups')->where('id >', 4)->where('id !=', 80)->order_by('name', 'asc');
         $group_parent_q = $this->db->get();
         foreach ($group_parent_q->result() as $row)
         {

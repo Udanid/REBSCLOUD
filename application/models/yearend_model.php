@@ -35,15 +35,23 @@ class yearend_model extends CI_Model {
 	}
 	
 	function get_years(){
-		$this->db->select('year');
+		$this->db->select('id,year');
 		$query = $this->db->get('ac_finance_year');
 		if($query->num_rows() > 0){
 			return $query->result();
 		}
 	}
 	
+	function get_system_start_date(){
+		$this->db->select_min('start_date');
+		$query = $this->db->get('ac_finance_year');
+		if($query->num_rows() > 0){
+			return $query->row()->start_date;
+		}
+	}
+	
 	function change_year($year){
-		if($year == 'current'){
+		if($year == 'current' || $year== ''){
 			$this->db->select('fy_start,fy_end');
 			$query = $this->db->get('cm_settings');
 			$data = $query->row();
@@ -59,6 +67,50 @@ class yearend_model extends CI_Model {
 			$this->session->set_userdata($session);
 			return true;
 		}
+	}
+	
+	function year_end_process_new(){	
+		$this->load->model('Ledger_model');
+		
+		$year = $this->input->post('year');
+		$start_date	= $this->input->post('start_date');
+		$end_date = $this->input->post('end_date');
+		
+		$date = date('Y-m-d',strtotime('+1 day',strtotime($this->input->post('end_date'))));
+		$narration = 'Profit Transfer Entry for the Account Year of '.$this->input->post('start_date').' - '.$this->input->post('end_date');
+		
+		$net_profit = calculate_netprofit($start_date,$end_date); //custom helper function
+		if($net_profit > 0){
+			$drlist[0]['ledgerid']='HEDBE42000000';
+			$drlist[0]['amount']=abs($net_profit);
+			$crlist[0]['ledgerid']='HEDCA51000000';
+			$crlist[0]['amount']=abs($net_profit);
+		}else if($net_profit < 0){
+			$drlist[0]['ledgerid']='HEDCA51000000';
+			$drlist[0]['amount']=abs($net_profit);
+			$crlist[0]['ledgerid']='HEDBE42000000';
+			$crlist[0]['amount']=abs($net_profit);
+		}
+		
+		$crtot = abs($net_profit);
+		$drtot = abs($net_profit);
+		jurnal_entry($crlist,$drlist,$crtot,$drtot,$date,$narration,$prj_id='',$lot_id='');		
+		
+		//set fy_start
+		$data = array(
+			'fy_start'	=>	$date,
+		);
+		$this->db->update('cm_settings', $data);
+		
+		//lock year
+		$data = array(
+			'locked'	=>	'1',
+		);
+		$this->db->where('year',$year);
+		$this->db->update('ac_finance_year', $data);
+		
+		return true;
+		
 	}
 	
 	function run_yearend_process($year,$start_date,$end_date){
@@ -81,10 +133,11 @@ class yearend_model extends CI_Model {
 			$this->db->trans_commit();
 			
 			//get all the ledger accounts
-			$this->db->select('id,op_balance,op_balance_dc');
+			$void_groups = array('19','21','23','24','27','40','41','69','72','73','74','75','76','77');
+			$this->db->select('id,op_balance,op_balance_dc')->where_not_in('group_id',$void_groups);
 			$query = $this->db->get('ac_ledgers');
 
-			if ($query->num_rows() > 0) {
+			if ($query->num_rows() > 0) { 
 				
 				//get year id
 				$this->db->select('*');
@@ -112,6 +165,24 @@ class yearend_model extends CI_Model {
 					}else{
 						$op_balance_dc_etd = $op_balance_dc;
 					}
+					
+					if($ledger_id == 'HEDBE42000000'){
+						//we get the profit or loss for the year and add to perticular ledger
+						$profit = calculate_netprofit_bs($start_date." 00:00:00",$end_date." 23:59:59");						
+						//$new_op_balance = $new_op_balance+$profit;
+						//if($op_balance_dc=='D')
+						$new_op_balance = ($new_op_balance*-1)+$profit;
+						//else
+						//$new_op_balance = $new_op_balance+$profit;
+						
+						//if($new_op_balance < 0){
+						//$op_balance_dc_etd = 'D';
+						//}
+						//else 
+						//$op_balance_dc_etd = 'C';
+					}
+					
+					
 					$new_op_balance_edt = abs($new_op_balance);
 					
 					//insert new data into ac_previous_balances table
@@ -127,6 +198,8 @@ class yearend_model extends CI_Model {
 					$data = array('op_balance' => $new_op_balance_edt,'op_balance_dc' => $op_balance_dc_etd);    
 					$this->db->where('id', $ledger_id);
 					$this->db->update('ac_ledgers', $data);
+					
+					
 					
 				}
 				//update new account year
@@ -337,6 +410,61 @@ class yearend_model extends CI_Model {
 						'end'	=>	$enddate
 					);
 			return $year;
+
+        }else{
+			return false;	
+		}	
+	}
+	
+	function get_year_id($year){
+       $this->db->select('id');
+        $this->db->from('ac_finance_year');
+        $this->db->where('year',$year);
+         //$this->db->order_by('ac_recieptdata.RCTNO','ASC');
+          $query3 = $this->db->get();
+             if ($query3->num_rows() > 0){
+                 $data=$query3->row();
+                return $data->id;
+            //  return 0;
+             }
+             return 0; 
+    }
+	
+	function open_new_year($date){
+		$this->db->select('*');
+        $this->db->from('cm_settings');
+        $query3 = $this->db->get();
+        if ($query3->num_rows() > 0){
+           $data=$query3->row();
+           $start_date = $data->fy_end;
+		   $data = array(
+				'year'			=>	date('Y',strtotime($start_date)),
+				'start_date'	=>	date('Y-m-d',strtotime($start_date.' +1 day')),
+				'end_date'		=> 	$date
+			);
+			$this->db->insert('ac_finance_year', $data);
+        }
+		
+		$data = array(
+			'fy_end'	=>	$date
+		);
+		$this->db->update('cm_settings', $data);
+		if ($this->db->trans_status() === FALSE)
+		{
+			return false;
+		}else{
+			return true;	
+		}
+	}
+	
+	function get_current_year(){
+		$this->db->select('start_date,end_date');
+		$this->db->where('locked','0');
+		$this->db->order_by('id','ASC');
+		$this->db->limit(1);
+		$query = $this->db->get('ac_finance_year'); 
+		 if ($query->num_rows() >0) {
+			return $query->row();
 
         }else{
 			return false;	
