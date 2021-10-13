@@ -630,7 +630,7 @@ class Ledger_model extends CI_Model {
 			$count++;
 		}
 
-		$check_acc = array('HEDBL31000000','HEDCA51000000','HEDBE41000000','HEDBE42000000');
+		$check_acc = array('HEDBL31000000','HEDBL23002400','HEDPE61002000','HEDPE61000200','HEDPE61000100','HEDPE62000100');
 		if (in_array($ledger_id, $check_acc))
 		{
 			$count++;
@@ -753,14 +753,5 @@ function get_next_ledgerid($data_group_id)
 			return $newcode;
 			
         }
-}
-
-function year_end_completed(){
-	$this->db->from('ac_finance_year')->where('locked', '1');
-      $ledger_q = $this->db->get();
-	    if ($ledger_q->num_rows() > 0){
-			return true;
-		}
-		return false;	
 }
 }
