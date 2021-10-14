@@ -119,7 +119,7 @@
                         
 					  </div>
 						<form action="<?=base_url()?>login/login_initialte" style="font-size:15px;" method="post" id="login-form">
-                        <input type="text"  value="<?=$company_code?>" id="companycode" name="companycode" placeholder="Companycode" required autocomplete="off">
+                        <input type="hidden"  value="<?=$company_code?>" id="companycode" name="companycode" placeholder="Companycode" required autocomplete="off">
 							<input type="text" class="user" id="username" style="color:#666;" name="username" placeholder="Username" value="<?=$this->session->userdata('thisusername');?>" required autocomplete="off">
                             
 							<input type="password" name="password" id="password" style="color:#666;" class="lock" value="<?=$this->session->userdata('password');?>" placeholder="Password">

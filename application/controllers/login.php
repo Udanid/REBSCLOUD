@@ -7,28 +7,39 @@ class Login extends CI_Controller {
     	$this->load->model("login_model"); //load event model
     	$this->load->model("common_model");
 		$this->load->model("message_model");
-			$this->load->model("accesshelper_model");
+		$this->load->model("accesshelper_model");
 		$this->load->model("user/user_model");
+		$this->load->library('encryption');
   	}
 
   	public function index(){
 		$data = array(
-            	'widget' => $this->recaptcha->getWidget(),
-            	'script' => $this->recaptcha->getScriptTag(),
-				'main_content' => 'login/main_page',
-				'msgu' => ''
-        	);
-			$data['company_code']=$this->uri->segment(3);
-			$dataset=$this->login_model->validate_company($this->uri->segment(3));
-			$data['logo']=NULL;
-			if($dataset)
-			{
-				$data['logo']=$dataset->company_logo;
-		//	if($this->message_model->is_generate_di(date('Y-m-d'))){
-			//$this->message_model->generate_today_delaint(date('Y-m-d'));
-			//}
+			'widget' => $this->recaptcha->getWidget(),
+			'script' => $this->recaptcha->getScriptTag(),
+			'main_content' => 'login/main_page',
+			'msgu' => ''
+		);
+		$company_code = $this->clean($this->encryption->decode($this->uri->segment(3)));
+		$data['company_code']=$company_code;
+		$dataset=$this->login_model->validate_company($company_code);
+		$data['logo']=NULL;
+		if($dataset)
+		{
+			$data['logo']=$dataset->company_logo;
 			$this->load->view('login', $data);
-			}
+		}else{
+			$this->session->set_flashdata('error',"Invalid Company Code");
+			redirect('login/error');	
+		}
+	}
+	
+	public function error(){
+		$this->load->view('error404');
+	}
+	
+	public function clean($string) {
+	   $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+	   return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
 	}
 
 	public function getResponse($str){
@@ -232,7 +243,7 @@ class Login extends CI_Controller {
 
 	function logout(){
 		$this->common_model->release_user_activeflag($this->session->userdata('userid'));
-		$companycode=$this->session->userdata('companycode');
+		$companycode=$this->encryption->encode($this->session->userdata('companycode'));
 		$this->session->sess_destroy();
 		redirect('login/index/'.$companycode);
 	}

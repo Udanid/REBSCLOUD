@@ -14,7 +14,6 @@ class Login_model extends CI_Model {
 		if ($query->num_rows >0) {
 			return	$query->row();
 		}
-       
 		else
 		return false;
 	}
