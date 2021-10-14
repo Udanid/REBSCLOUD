@@ -88,7 +88,7 @@
 				<h3 class="title1"><img src="<?=base_url()?>uploads/company_logo/<?=$logo?>" style="width:250px;"> </h3>
                <? }  else { ?>
                
-               	<h3 class="title1"><img src="<?=base_url()?>media/images/logo2.png"> </h3>
+               	<h3 class="title1"><img src="<?=base_url()?>media/images/rebslogo.jpg"> </h3>
            
                <? }?>
             
